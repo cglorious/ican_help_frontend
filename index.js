@@ -7,6 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
 })
 
+function loadDropdown(){
+  
+}
+
 function loadCharts(){
   fetch(CHARTS_URL)
   .then(resp => resp.json())
@@ -22,17 +26,17 @@ function renderChart(chart) {
 
   btn.setAttribute('data-id', chart.id)
   btn.innerText = chart.attributes.name
-  btn.addEventListener("click", renderJobs)
+  btn.addEventListener("click", (chart) => renderJobs(chart))
 
   p.append(btn)
   div.append(p)
   main.append(div)
 }
 
-function renderJobs() {
+function renderJobs(chart) {
   const div = document.getElementById('job-list')
   const p = document.createElement('p')
 
-  p.innerText = `These are the jobs.`
+  p.innerText = `These are the ${chart.attributes.name} jobs.`
   div.append(p)
 }
