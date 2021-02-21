@@ -1,7 +1,7 @@
 const BASE_URL = "http://localhost:3000"
 const CHARTS_URL = `${BASE_URL}/api/v1/charts`
 const JOBS_URL = `${BASE_URL}/api/v1/jobs`
-const main = document.querySelector('body')
+const main = document.querySelector('main')
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
@@ -16,7 +16,23 @@ function loadCharts(){
 }
 
 function renderChart(chart) {
+  const div = document.getElementById('dropdown')
   const p = document.createElement('p')
-  p.innerText = chart.attributes.name
-  main.append(p)
+  const btn = document.createElement('button')
+
+  btn.setAttribute('data-id', chart.id)
+  btn.innerText = chart.attributes.name
+  btn.addEventListener("click", renderJobs)
+
+  p.append(btn)
+  div.append(p)
+  main.append(div)
+}
+
+function renderJobs() {
+  const div = document.getElementById('job-list')
+  const p = document.createElement('p')
+
+  p.innerText = `These are the jobs.`
+  div.append(p)
 }
