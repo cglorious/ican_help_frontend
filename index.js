@@ -7,31 +7,38 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
 })
 
-function loadDropdown(){
-  
-}
-
 function loadCharts(){
   fetch(CHARTS_URL)
   .then(resp => resp.json())
   .then(json => {
-    json.data.forEach(chart => renderChart(chart));
+    json.data.forEach(chart => loadDropdown(chart));
   })
 }
 
-function renderChart(chart) {
-  const div = document.getElementById('dropdown')
-  const p = document.createElement('p')
-  const btn = document.createElement('button')
+function loadDropdown(chart){
+  const select = document.getElementById('chart-dropdown-js-select')
+  const option = document.createElement('option')
 
-  btn.setAttribute('data-id', chart.id)
-  btn.innerText = chart.attributes.name
-  btn.addEventListener("click", (chart) => renderJobs(chart))
+  option.setAttribute('data-id', chart.id)
+  option.innerText = `${chart.attributes.name} Chart`
+  option.addEventListener('click', console.log(chart.attributes.jobs))
 
-  p.append(btn)
-  div.append(p)
-  main.append(div)
+  select.append(option)
 }
+
+// function renderChart(chart) {
+//   const div = document.getElementById('dropdown')
+//   const p = document.createElement('p')
+//   const btn = document.createElement('button')
+//
+//   btn.setAttribute('data-id', chart.id)
+//   btn.innerText = chart.attributes.name
+//   btn.addEventListener("click", (chart) => renderJobs(chart))
+//
+//   p.append(btn)
+//   div.append(p)
+//   main.append(div)
+// }
 
 function renderJobs(chart) {
   const div = document.getElementById('job-list')
