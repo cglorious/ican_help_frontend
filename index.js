@@ -1,7 +1,6 @@
 const BASE_URL = "http://localhost:3000"
 const CHARTS_URL = `${BASE_URL}/api/v1/charts`
 const JOBS_URL = `${BASE_URL}/api/v1/jobs`
-// const main = document.querySelector('main')
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
@@ -23,30 +22,25 @@ function loadDropdown(chart){
 
   option.setAttribute('value', chart.id)
   option.innerText = `${chart.attributes.name} Chart`
-  // option.addEventListener('click', console.log(chart.attributes.jobs))
 
   select.append(option)
 }
 
 function chartHandler(e){
   e.preventDefault
-  const chartId = document.querySelector("#chart-dropdown-js-select").value
-  console.log(chartId)
+  const chartChoice = document.querySelector("#chart-dropdown-js-select").value
+  const chartId = parseInt(chartChoice, 10)
+  loadJobs(chartId)
 }
 
-// function renderChart(chart) {
-//   const div = document.getElementById('dropdown')
-//   const p = document.createElement('p')
-//   const btn = document.createElement('button')
-//
-//   btn.setAttribute('data-id', chart.id)
-//   btn.innerText = chart.attributes.name
-//   btn.addEventListener("click", (chart) => renderJobs(chart))
-//
-//   p.append(btn)
-//   div.append(p)
-//   main.append(div)
-// }
+function loadJobs(chartId){
+  const i = chartId - 1
+  fetch(CHARTS_URL)
+  .then(resp => resp.json())
+  .then(json => {
+    console.log(json.data[i].attributes);
+  })
+}
 
 // function renderJobs(chart) {
 //   const div = document.getElementById('job-list')
