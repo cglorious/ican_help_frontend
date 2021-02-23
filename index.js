@@ -34,18 +34,24 @@ function chartHandler(e){
 }
 
 function loadJobs(chartId){
+  //debugger
+  //working in backend api, not on frontend
   const i = chartId - 1
-  fetch(CHARTS_URL)
+  fetch(`${CHARTS_URL}/${chartId}`)
   .then(resp => resp.json())
   .then(json => {
-    console.log(json.data[i].attributes);
+    renderJobs(json.data);
   })
 }
 
+function renderJobs(chart) {
+  const div = document.getElementById('job-list')
+  const p = document.createElement('p')
+
+  p.innerText = `These are the ${chart.attributes.name} Chart jobs:`
+  div.append(p)
+}
+
 // function renderJobs(chart) {
-//   const div = document.getElementById('job-list')
-//   const p = document.createElement('p')
-//
-//   p.innerText = `These are the ${chart.attributes.name} jobs.`
-//   div.append(p)
+//   console.log(`These are the ${chart.attributes.name} Chart jobs:`)
 // }
