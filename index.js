@@ -6,33 +6,39 @@ document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
   // const chartForm = document.querySelector("#chart-dropdown-js-form")
   // chartForm.addEventListener("submit", (e) => chartHandler(e))
-  renderClassroomChart()
+  fetchChart()
 })
 
-function renderClassroomChart(){
+function fetchChart(){
   fetch(`${CHARTS_URL}/1`)
   .then(resp => resp.json())
   .then(json => {
-    renderClassroomJobs(json.data);
+    renderChart(json.data);
   })
 }
 
-function renderClassroomJobs(chart){
-  const div = document.getElementById('classroom-chart')
+function renderChart(chart){
+  const div = document.getElementById('chart')
   const h2 = document.createElement('h2')
-  const ul = document.createElement('ul')
+  const jobs = chart.attributes.jobs
 
   h2.innerText = `These are the ${chart.attributes.name} Chart jobs:`
-
   div.append(h2)
+
+  renderJobs(jobs)
 }
 
-function renderJobs(){
-  const li = document.createElement('li')
-  li.innerText = `${chart.attributes.jobs.title}`
+function renderJobs(chart_jobs){
+  const ul = document.createElement('ul')
+  const div = document.getElementById('chart')
 
-  ul.append(li)
-  div.append(ul)
+  for (i = 0; i < chart_jobs.length; i++) {
+    let li = document.createElement('li')
+    li.innerText = chart_jobs[i].title
+    ul.append(li)
+    div.append(ul)
+  }
+
 }
 
 function loadCharts(){
@@ -80,9 +86,6 @@ function postFetch(chart_id){
   })
 }
 
-function renderJobs(chart) {
-  console.log(`These are the ${chart.attributes.name} Chart jobs:`)
-}
 
 // function renderJobs(chart) {
 //   const div = document.getElementById('job-list')
