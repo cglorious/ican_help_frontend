@@ -9,6 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
   fetchChart()
 })
 
+// individual chart
 function fetchChart(){
   fetch(`${CHARTS_URL}/1`)
   .then(resp => resp.json())
@@ -41,6 +42,7 @@ function renderJobs(chart_jobs){
 
 }
 
+// chart options - dropdown
 function loadCharts(){
   fetch(CHARTS_URL)
   .then(resp => resp.json())
@@ -59,38 +61,29 @@ function loadDropdown(chart){
   select.append(option)
 }
 
-function chartHandler(e){
-  e.preventDefault
-  const chartChoice = document.querySelector("#chart-dropdown-js-select").value
-  const chartId = parseInt(chartChoice, 10)
-  postFetch(chartId)
-}
-
-function postFetch(chart_id){
-  //debugger
-  //get or post?
-  fetch(`${CHARTS_URL}/${chart_id}`, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      "Accept": "application/json"
-    },
-    body: JSON.stringify({
-      chart_id: chart_id
-      //add jobs
-    })
-  })
-  .then(resp => resp.json())
-  .then(json => {
-    renderJobs(json.data);
-  })
-}
-
-
-// function renderJobs(chart) {
-//   const div = document.getElementById('job-list')
-//   const p = document.createElement('p')
+// function chartHandler(e){
+//   e.preventDefault
+//   const chartChoice = document.querySelector("#chart-dropdown-js-select").value
+//   const chartId = parseInt(chartChoice, 10)
+//   postFetch(chartId)
+// }
 //
-//   p.innerText = `These are the ${chart.attributes.name} Chart jobs:`
-//   div.append(p)
+// function postFetch(chart_id){
+//   //debugger
+//   //get or post?
+//   fetch(`${CHARTS_URL}/${chart_id}`, {
+//     method: "POST",
+//     headers: {
+//       "Content-Type": "application/json",
+//       "Accept": "application/json"
+//     },
+//     body: JSON.stringify({
+//       chart_id: chart_id
+//       //add jobs
+//     })
+//   })
+//   .then(resp => resp.json())
+//   .then(json => {
+//     renderJobs(json.data);
+//   })
 // }
