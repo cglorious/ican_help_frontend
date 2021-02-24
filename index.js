@@ -4,9 +4,42 @@ const JOBS_URL = `${BASE_URL}/api/v1/jobs`
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
-  const chartForm = document.querySelector("#chart-dropdown-js-form")
-  chartForm.addEventListener("submit", (e) => chartHandler(e))
+  // const chartForm = document.querySelector("#chart-dropdown-js-form")
+  // chartForm.addEventListener("submit", (e) => chartHandler(e))
+  fetchChart()
 })
+
+function fetchChart(){
+  fetch(`${CHARTS_URL}/1`)
+  .then(resp => resp.json())
+  .then(json => {
+    renderChart(json.data);
+  })
+}
+
+function renderChart(chart){
+  const div = document.getElementById('chart')
+  const h2 = document.createElement('h2')
+  const jobs = chart.attributes.jobs
+
+  h2.innerText = `These are the ${chart.attributes.name} Chart jobs:`
+  div.append(h2)
+
+  renderJobs(jobs)
+}
+
+function renderJobs(chart_jobs){
+  const ul = document.createElement('ul')
+  const div = document.getElementById('chart')
+
+  for (i = 0; i < chart_jobs.length; i++) {
+    let li = document.createElement('li')
+    li.innerText = chart_jobs[i].title
+    ul.append(li)
+    div.append(ul)
+  }
+
+}
 
 function loadCharts(){
   fetch(CHARTS_URL)
@@ -53,9 +86,6 @@ function postFetch(chart_id){
   })
 }
 
-function renderJobs(chart) {
-  console.log(`These are the ${chart.attributes.name} Chart jobs:`)
-}
 
 // function renderJobs(chart) {
 //   const div = document.getElementById('job-list')
