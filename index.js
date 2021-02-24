@@ -30,22 +30,37 @@ function chartHandler(e){
   e.preventDefault
   const chartChoice = document.querySelector("#chart-dropdown-js-select").value
   const chartId = parseInt(chartChoice, 10)
-  loadJobs(chartId)
+  postFetch(chartId)
 }
 
-function loadJobs(chartId){
-  const i = chartId - 1
-  fetch(CHARTS_URL)
+function postFetch(chart_id){
+  //debugger
+  //get or post?
+  fetch(`${CHARTS_URL}/${chart_id}`, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      "Accept": "application/json"
+    },
+    body: JSON.stringify({
+      chart_id: chart_id
+      //add jobs
+    })
+  })
   .then(resp => resp.json())
   .then(json => {
-    console.log(json.data[i].attributes);
+    renderJobs(json.data);
   })
+}
+
+function renderJobs(chart) {
+  console.log(`These are the ${chart.attributes.name} Chart jobs:`)
 }
 
 // function renderJobs(chart) {
 //   const div = document.getElementById('job-list')
 //   const p = document.createElement('p')
 //
-//   p.innerText = `These are the ${chart.attributes.name} jobs.`
+//   p.innerText = `These are the ${chart.attributes.name} Chart jobs:`
 //   div.append(p)
 // }
