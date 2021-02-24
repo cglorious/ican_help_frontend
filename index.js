@@ -4,9 +4,36 @@ const JOBS_URL = `${BASE_URL}/api/v1/jobs`
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
-  const chartForm = document.querySelector("#chart-dropdown-js-form")
-  chartForm.addEventListener("submit", (e) => chartHandler(e))
+  // const chartForm = document.querySelector("#chart-dropdown-js-form")
+  // chartForm.addEventListener("submit", (e) => chartHandler(e))
+  renderClassroomChart()
 })
+
+function renderClassroomChart(){
+  fetch(`${CHARTS_URL}/1`)
+  .then(resp => resp.json())
+  .then(json => {
+    renderClassroomJobs(json.data);
+  })
+}
+
+function renderClassroomJobs(chart){
+  const div = document.getElementById('classroom-chart')
+  const h2 = document.createElement('h2')
+  const ul = document.createElement('ul')
+
+  h2.innerText = `These are the ${chart.attributes.name} Chart jobs:`
+
+  div.append(h2)
+}
+
+function renderJobs(){
+  const li = document.createElement('li')
+  li.innerText = `${chart.attributes.jobs.title}`
+
+  ul.append(li)
+  div.append(ul)
+}
 
 function loadCharts(){
   fetch(CHARTS_URL)
