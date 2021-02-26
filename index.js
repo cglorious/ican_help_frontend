@@ -23,6 +23,7 @@ function renderChart(chart){
   const h2 = document.createElement('h2')
   const jobs = chart.attributes.jobs
 
+  h2.setAttribute('class', 'chart-title')
   h2.innerText = `These are the ${chart.attributes.name} Chart jobs:`
   div.append(h2)
 
@@ -30,16 +31,34 @@ function renderChart(chart){
 }
 
 function renderJobs(chart_jobs){
-  const ul = document.createElement('ul')
-  const div = document.getElementById('chart')
+  const chartDiv = document.getElementById('chart')
+  const rowDiv = document.createElement('div')
 
   for (i = 0; i < chart_jobs.length; i++) {
-    let li = document.createElement('li')
-    li.innerText = chart_jobs[i].title
-    ul.append(li)
-    div.append(ul)
-  }
+    const columnDiv = document.createElement('div')
+    const jobDiv = document.createElement('div')
+    const image = document.createElement('img')
+    const containerDiv = document.createElement('div')
+    const title = document.createElement('h4')
+    const description = document.createElement('p')
 
+    rowDiv.setAttribute('class', 'row')
+    columnDiv.setAttribute('class', 'column')
+    jobDiv.setAttribute('class', 'card')
+    containerDiv.setAttribute('class', 'container')
+    image.setAttribute('src', chart_jobs[i].image_url)
+    image.setAttribute('alt', chart_jobs[i].title)
+    image.setAttribute('style', 'width:100%')
+
+    title.innerText = chart_jobs[i].title
+    description.innerText = chart_jobs[i].description
+
+    containerDiv.append(title, description)
+    jobDiv.append(image, containerDiv)
+    columnDiv.append(jobDiv)
+    rowDiv.append(columnDiv)
+  }
+  chartDiv.append(rowDiv)
 }
 
 // chart options - dropdown
