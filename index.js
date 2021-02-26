@@ -4,8 +4,6 @@ const JOBS_URL = `${BASE_URL}/api/v1/jobs`
 
 document.addEventListener('DOMContentLoaded', () => {
   loadCharts()
-  // const chartForm = document.querySelector("#chart-dropdown-js-form")
-  // chartForm.addEventListener("submit", (e) => chartHandler(e))
   fetchChart()
 })
 
@@ -48,7 +46,6 @@ function renderJobs(chart_jobs){
     containerDiv.setAttribute('class', 'container')
     image.setAttribute('src', chart_jobs[i].image_url)
     image.setAttribute('alt', chart_jobs[i].title)
-    image.setAttribute('style', 'width:100%')
 
     title.innerText = chart_jobs[i].title
     description.innerText = chart_jobs[i].description
@@ -73,11 +70,21 @@ function loadCharts(){
 function loadDropdown(chart){
   const select = document.getElementById('chart-dropdown-js-select')
   const option = document.createElement('option')
+  const chartForm = document.querySelector("#chart-dropdown-js-form")
 
   option.setAttribute('value', chart.id)
   option.innerText = `${chart.attributes.name} Chart`
 
   select.append(option)
+
+  chartForm.addEventListener("submit", (e) => chartHandler(e))
+}
+
+function chartHandler(e){
+  e.preventDefault
+  const chartChoice = document.querySelector("#chart-dropdown-js-select").value
+  const chartId = parseInt(chartChoice, 10)
+  debugger
 }
 
 // function chartHandler(e){
