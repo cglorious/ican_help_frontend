@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // individual chart
 function fetchChart(){
-  fetch(`${CHARTS_URL}/3`)
+  fetch(`${CHARTS_URL}/2`)
   .then(resp => resp.json())
   .then(json => {
     renderChart(json.data);
@@ -30,32 +30,32 @@ function renderChart(chart){
 
 function renderJobs(chart_jobs){
   const chartDiv = document.getElementById('chart')
-  const rowDiv = document.createElement('div')
 
   for (i = 0; i < chart_jobs.length; i++) {
-    const columnDiv = document.createElement('div')
-    const jobDiv = document.createElement('div')
+    const flipCard = document.createElement('div')
+    const inner = document.createElement('div')
     const image = document.createElement('img')
-    const containerDiv = document.createElement('div')
+    const flipFront = document.createElement('div')
+    const flipBack = document.createElement('div')
     const title = document.createElement('h4')
     const description = document.createElement('p')
 
-    rowDiv.setAttribute('class', 'row')
-    columnDiv.setAttribute('class', 'column')
-    jobDiv.setAttribute('class', 'card')
-    containerDiv.setAttribute('class', 'container')
+    flipCard.setAttribute('class', 'flip-card')
+    inner.setAttribute('class', 'flip-card-inner')
+    flipFront.setAttribute('class', 'flip-card-front')
+    flipBack.setAttribute('class', 'flip-card-back')
     image.setAttribute('src', chart_jobs[i].image_url)
     image.setAttribute('alt', chart_jobs[i].title)
 
     title.innerText = chart_jobs[i].title
     description.innerText = chart_jobs[i].description
 
-    containerDiv.append(title, description)
-    jobDiv.append(image, containerDiv)
-    columnDiv.append(jobDiv)
-    rowDiv.append(columnDiv)
+    flipFront.append(image)
+    flipBack.append(title, description)
+    inner.append(flipFront, flipBack)
+    flipCard.append(inner)
+    chartDiv.append(flipCard)
   }
-  chartDiv.append(rowDiv)
 }
 
 // chart options - dropdown
