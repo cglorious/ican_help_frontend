@@ -6,6 +6,40 @@ document.addEventListener('DOMContentLoaded', () => {
   renderChartOptions()
 })
 
+// chart options - button
+function renderChartOptions(){
+  loadHeader()
+  loadCharts()
+}
+
+function loadHeader(){
+  const choice = document.getElementById('chart-choice')
+  const h2 = document.createElement('h2')
+  h2.innerText = "Welcome, helper! Choose your location."
+
+  choice.append(h2)
+}
+
+
+function loadCharts(){
+  fetch(CHARTS_URL)
+  .then(resp => resp.json())
+  .then(json => {
+    json.data.forEach(chart => loadButton(chart));
+  })
+}
+
+function loadButton(chart){
+  const choice = document.getElementById('chart-choice')
+  const btn = document.createElement('button')
+
+  btn.setAttribute('id', chart.id)
+  btn.innerText = chart.attributes.name
+  btn.addEventListener("click", (e) => fetchChart(e.target.id))
+
+  choice.append(btn)
+}
+
 // individual chart
 function fetchChart(value){
   fetch(`${CHARTS_URL}/${value}`)
@@ -21,7 +55,7 @@ function renderChart(chart){
   const jobs = chart.attributes.jobs
 
   h2.setAttribute('class', 'chart-title')
-  h2.innerText = `These are the ${chart.attributes.name} Chart jobs:`
+  h2.innerText = `${chart.attributes.name} Chart`
   div.append(h2)
 
   renderJobs(jobs)
@@ -55,38 +89,4 @@ function renderJobs(chart_jobs){
     rowDiv.append(columnDiv)
   }
   chartDiv.append(rowDiv)
-}
-
-// chart options - button
-function renderChartOptions(){
-  loadHeader()
-  loadCharts()
-}
-
-function loadHeader(){
-  const choice = document.getElementById('chart-choice')
-  const h2 = document.createElement('h2')
-  h2.innerText = "Choose a Chart"
-
-  choice.append(h2)
-}
-
-
-function loadCharts(){
-  fetch(CHARTS_URL)
-  .then(resp => resp.json())
-  .then(json => {
-    json.data.forEach(chart => loadButton(chart));
-  })
-}
-
-function loadButton(chart){
-  const choice = document.getElementById('chart-choice')
-  const btn = document.createElement('button')
-
-  btn.setAttribute('id', chart.id)
-  btn.innerText = chart.attributes.name
-  btn.addEventListener("click", (e) => fetchChart(e.target.id))
-
-  choice.append(btn)
 }
