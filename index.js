@@ -4,7 +4,6 @@ const JOBS_URL = `${BASE_URL}/api/v1/jobs`
 
 document.addEventListener('DOMContentLoaded', () => {
   renderChartOptions()
-  fetchChart("1")
 })
 
 // individual chart
@@ -87,17 +86,7 @@ function loadButton(chart){
 
   btn.setAttribute('id', chart.id)
   btn.innerText = chart.attributes.name
+  btn.addEventListener("click", (e) => fetchChart(e.target.id))
 
   choice.append(btn)
 }
-
-function buttonHander(){
-
-}
-
-// function chartHandler(e){
-//   e.preventDefault
-//   const chartChoice = document.querySelector("#chart-dropdown-js-select").value
-//   const chartId = parseInt(chartChoice, 10)
-//   debugger
-// }
