@@ -9,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // individual chart
 function fetchChart(){
-  fetch(`${CHARTS_URL}/1`)
+  fetch(`${CHARTS_URL}/3`)
   .then(resp => resp.json())
   .then(json => {
     renderChart(json.data);
