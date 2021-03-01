@@ -14,10 +14,13 @@ function renderChartOptions(){
 
 function loadHeader(){
   const choice = document.getElementById('chart-choice')
-  const h2 = document.createElement('h2')
-  h2.innerText = "Welcome, helper! Choose your location."
+  const h1 = document.createElement('h1')
+  const options = document.createElement('div')
 
-  choice.append(h2)
+  h1.innerText = "Choose your location."
+
+  options.setAttribute('id', 'options')
+  choice.append(h1, options)
 }
 
 
@@ -30,14 +33,19 @@ function loadCharts(){
 }
 
 function loadButton(chart){
+  const div = document.getElementById('options')
   const choice = document.getElementById('chart-choice')
   const btn = document.createElement('button')
 
   btn.setAttribute('id', chart.id)
   btn.innerText = chart.attributes.name
-  btn.addEventListener("click", (e) => fetchChart(e.target.id))
+  btn.addEventListener("click", (e) => {
+    choice.setAttribute('class','fadeOut');
+    fetchChart(e.target.id)
+  });
 
-  choice.append(btn)
+  div.append(btn)
+  choice.append(div)
 }
 
 // individual chart
